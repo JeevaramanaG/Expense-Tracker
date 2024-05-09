@@ -73,9 +73,9 @@ const userController = {
     });
   }),
   // Add profile
-
   profile: asyncHandler(async (req, res) => {
-    const user = await User.findById("663cd5850be11297640ff1a6");
+    // add dynamic user 
+    const user = await User.findById(req.user);
     res.json({ username: user.username, email: user.email });
   }),
 };
