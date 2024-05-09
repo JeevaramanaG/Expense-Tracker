@@ -1,7 +1,9 @@
 const express = require("express");
 const userRouter = require("./routes/UserRouter");
 const mongoose = require("mongoose");
+const errorHandler = require("./middlewares/errorHandler");
 
+// middleware
 const app = express();
 app.use(express.json());
 
@@ -14,7 +16,11 @@ mongoose
     console.log(err);
   });
 
+// Router
 app.use("/", userRouter);
+
+// Error handler
+app.use(errorHandler);
 
 const PORT = 3000;
 
