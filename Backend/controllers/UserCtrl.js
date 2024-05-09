@@ -4,12 +4,15 @@ const bcrypt = require("bcryptjs");
 
 const userController = {
   // Register
-    register: asyncHandler(async (req, res) => {
+  register: asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
     // Validate required fields
     if (!username || !email || !password) {
-      res.status(400).json({ message: "Please provide all required fields: username, email, password." });
+      res.status(400).json({
+        message:
+          "Please provide all required fields: username, email, password.",
+      });
       return;
     }
 
@@ -41,8 +44,33 @@ const userController = {
       },
     });
   }),
-  // Add login 
-  // Add profile 
+  // Add login
+  login: asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    // check the valid email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid Email or Password" });
+    }
+    //check the valid password
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ message: "Invalid Email or Password" });
+    }
+    // create and sign token
+    const token = jwt.sign({ id: user._id }, "jeeva", {
+      expiresIn: "3h",
+    });
+    res.json({
+      message: "Successfully logged in",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  }),
+  // Add profile
 };
-
 module.exports = userController;
