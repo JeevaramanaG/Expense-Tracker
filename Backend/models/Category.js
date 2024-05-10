@@ -5,16 +5,16 @@ const categorySchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
     name: {
       type: String,
-      require: true,
+      required: true,
       default: "Uncategorized",
     },
     type: {
       type: String,
-      enum: ["Income", "Expense"],
+      enum: ["income", "expense"],
       required: true,
     },
   },
@@ -22,4 +22,4 @@ const categorySchema = mongoose.Schema(
     timestamps: true,
   }
 );
-exports.default = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Categories", categorySchema);
