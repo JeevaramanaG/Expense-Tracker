@@ -10,3 +10,4 @@ const CategoryController = {
 
   delete: asyncHandler(async (req, res) => {}),
 };
+module.exports = CategoryController;
