@@ -22,5 +22,11 @@ userRouter.put(
   isAuthenticated,
   userController.changePassword
 );
+// Update profile Api
+userRouter.put(
+  "/api/v1/users/update-profile",
+  isAuthenticated,
+  userController.updateUserProfile
+);
 
 module.exports = userRouter;
