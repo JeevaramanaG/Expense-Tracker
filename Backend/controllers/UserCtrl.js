@@ -82,16 +82,16 @@ const userController = {
   //change password
   changePassword: asyncHandler(async (req, res) => {
     // get old pass from body
-    const { new_password } = req.body;
+    const { newPassword } = req.body;
     // find user by id
     const user = await User.findById(req.user);
-
     if (!user) {
       throw new Error("Invalid user");
     }
     // hash the user password
-    const salt = bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(new_password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(newPassword, salt);
+    console.log(hashPassword);
     user.password = hashPassword;
     // resave
     await user.save();
