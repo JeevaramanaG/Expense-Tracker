@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Transaction = require("../models/Transaction");
+const { lists } = require("./CategoryCtrl");
 
 const userTransaction = {
   add: asyncHandler(async (req, res) => {
@@ -17,6 +18,11 @@ const userTransaction = {
       description,
     });
     res.status(201).json(transaction);
+  }),
+  //lists
+  lists: asyncHandler(async (req, res) => {
+    const transactions = Transaction.find({ user: req.user });
+    res.json(transactions);
   }),
 };
 
