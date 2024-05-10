@@ -34,7 +34,12 @@ const CategoryController = {
     res.status(201).json(createCategory);
   }),
 
-  lists: asyncHandler(async (req, res) => {}),
+  lists: asyncHandler(async (req, res) => {
+    const category = Category.find({
+      user: req.user,
+    });
+    res.status(200).json(category);
+  }),
 
   update: asyncHandler(async (req, res) => {}),
 
