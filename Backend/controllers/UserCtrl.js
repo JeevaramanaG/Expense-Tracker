@@ -74,9 +74,28 @@ const userController = {
   }),
   // Add profile
   profile: asyncHandler(async (req, res) => {
-    // add dynamic user 
+    // add dynamic user
     const user = await User.findById(req.user);
     res.json({ username: user.username, email: user.email });
+  }),
+
+  //change password
+  changePassword: asyncHandler(async (req, res) => {
+    // get old pass from body
+    const { new_password } = req.body;
+    // find user by id
+    const user = await User.findById(req.user);
+
+    if (!user) {
+      throw new Error("Invalid user");
+    }
+    // hash the user password
+    const salt = bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(new_password, salt);
+    user.password = hashPassword;
+    // resave
+    await user.save();
+    res.json({ message: "Password is changed Successfully" });
   }),
 };
 module.exports = userController;
