@@ -97,5 +97,20 @@ const userController = {
     await user.save();
     res.json({ message: "Password is changed Successfully" });
   }),
+  // Update User Profile
+  updateUserProfile: asyncHandler(async (req, res) => {
+    const { username, email } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user,
+      {
+        username,
+        email,
+      },
+      {
+        new: true,
+      }
+    );
+    res.json({ message: "Profile Updated", updatedUser });
+  }),
 };
 module.exports = userController;
