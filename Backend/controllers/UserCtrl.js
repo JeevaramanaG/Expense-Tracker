@@ -72,6 +72,7 @@ const userController = {
       },
     });
   }),
+  
   // Add profile
   profile: asyncHandler(async (req, res) => {
     // add dynamic user
