@@ -21,6 +21,7 @@ mongoose
 app.use("/", userRouter);
 app.use("/", categoryRouter);
 
+
 // Error handler
 app.use(errorHandler);
 

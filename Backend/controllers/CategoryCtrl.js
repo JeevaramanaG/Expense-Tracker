@@ -24,7 +24,7 @@ const CategoryController = {
     if (categoryExists) {
       throw new Error(`${categoryExists.name} is already exists`);
     }
-
+    // create category in database
     const createCategory = await Category.create({
       name: normalizedName,
       type: type.toLowerCase(),
@@ -33,7 +33,7 @@ const CategoryController = {
 
     res.status(201).json(createCategory);
   }),
-
+  // display the list
   lists: asyncHandler(async (req, res) => {
     const categoryList = await Category.find({
       user: req.user,
