@@ -50,14 +50,14 @@ const CategoryController = {
   update: asyncHandler(async (req, res) => {
     const categoryId = req.params.id;
     const { type, name } = req.body;
-    const normalizedName = name.toLowerCase();
-    const category = Category.find(categoryId);
+
+    const category = await Category.findById(categoryId);
 
     if (!category && category.user.toLowerCase() !== req.user.toLowerCase()) {
       throw new Error("category not found or user not authorized");
     }
 
-    const oldCategory = name;
+    const oldCategory = category.name;
     // update category
     category.name = name;
     category.type = type;
@@ -76,12 +76,13 @@ const CategoryController = {
           },
         }
       );
+      res.json(updateCategory);
     }
   }),
 
   // Delete Category
   delete: asyncHandler(async (req, res) => {
-    const category = Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id);
 
     if (category && category.user.toString() === req.user.toString()) {
       //Store the default Category before deleting
@@ -98,7 +99,7 @@ const CategoryController = {
           },
         }
       );
-      await category.findByIdAndDelete(req.params.id);
+      const deleted = await Category.findByIdAndDelete(req.params.id);
       res.json({ message: `Category ${category.name} has been deleted.` });
     } else {
       res.json({ message: "user unAuthorized" });
