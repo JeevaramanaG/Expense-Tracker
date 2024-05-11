@@ -99,7 +99,7 @@ const CategoryController = {
           },
         }
       );
-      const deleted = await Category.findByIdAndDelete(req.params.id);
+      await Category.findByIdAndDelete(req.params.id);
       res.json({ message: `Category ${category.name} has been deleted.` });
     } else {
       res.json({ message: "user unAuthorized" });
