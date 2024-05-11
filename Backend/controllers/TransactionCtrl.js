@@ -1,10 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const Transaction = require("../models/Transaction");
-const { lists } = require("./CategoryCtrl");
 
 const userTransaction = {
   add: asyncHandler(async (req, res) => {
-    const { type, amount, date, description } = req.body;
+    const { type, category, amount, date, description } = req.body;
     if (!type || !amount || !date) {
       return res
         .status(400)
@@ -14,6 +13,7 @@ const userTransaction = {
       user: req.user,
       type,
       amount,
+      category,
       date,
       description,
     });
@@ -21,7 +21,7 @@ const userTransaction = {
   }),
   //lists
   lists: asyncHandler(async (req, res) => {
-    const transactions = Transaction.find({ user: req.user });
+    const transactions = await Transaction.find({ user: req.user });
     res.json(transactions);
   }),
 };

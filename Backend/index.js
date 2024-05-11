@@ -3,6 +3,7 @@ const userRouter = require("./routes/UserRouter");
 const mongoose = require("mongoose");
 const errorHandler = require("./middlewares/errorHandler");
 const categoryRouter = require("./routes/CategoryRouter");
+const transactionRouter = require("./routes/TransactionRouter");
 
 // middleware
 const app = express();
@@ -20,7 +21,7 @@ mongoose
 // Router
 app.use("/", userRouter);
 app.use("/", categoryRouter);
-
+app.use("/", transactionRouter);
 
 // Error handler
 app.use(errorHandler);

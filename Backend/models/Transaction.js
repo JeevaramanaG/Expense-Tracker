@@ -5,7 +5,7 @@ const transactionSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
     type: {
       type: String,
@@ -15,7 +15,7 @@ const transactionSchema = mongoose.Schema(
     category: {
       type: String,
       default: "Uncategorized",
-      require: true,
+      required: true,
     },
     amount: {
       type: Number,
@@ -27,7 +27,7 @@ const transactionSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      require: false,
+      required: false,
     },
   },
   {
