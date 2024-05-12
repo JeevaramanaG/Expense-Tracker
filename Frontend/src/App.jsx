@@ -1,6 +1,16 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HeroSection from "./components/Home/HomePage";
+import PrivateNavbar from "./components/Navbar/PrivateNavbar";
+import PublicNavbar from "./components/Navbar/PublicNavbar";
+
 function App() {
   return (
-    <h1 className="text-3xl text-red-500 font-bold underline">Hello world!</h1>
+    <BrowserRouter>
+      <PublicNavbar />
+      <Routes>
+        <Route path="/" element={<HeroSection />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
