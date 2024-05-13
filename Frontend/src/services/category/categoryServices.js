@@ -42,3 +42,27 @@ export const listsCategoryAPI = async () => {
     throw error;
   }
 };
+
+// API for update category
+export const updateCategoryAPI = async ({ name, type, id }) => {
+  const token = getUserFromLocalStorage();
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/category/update/${id}`,
+      {
+        name,
+        type,
+      },
+      {
+        headers: {
+          Authorization: `jeeva ${token}`,
+        },
+      }
+    );
+    // return response data
+    return response.data;
+  } catch (error) {
+    // Handle error if request fails
+    throw error;
+  }
+};

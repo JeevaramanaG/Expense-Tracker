@@ -1,32 +1,48 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  FaDollarSign,
-  FaCalendarAlt,
-  FaRegCommentDots,
-  FaWallet,
-} from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
 import { SiDatabricks } from "react-icons/si";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import AlertMessage from "../Alert/AlertMessage";
+import { updateCategoryAPI } from "../../services/category/categoryServices";
 
 const validationSchema = Yup.object({
-  name: Yup.string()
-    .required("Category name is required")
-    .oneOf(["income", "expense"]),
+  name: Yup.string().required("Category name is required"),
   type: Yup.string()
     .required("Category type is required")
     .oneOf(["income", "expense"]),
 });
 
 const UpdateCategory = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { mutateAsync, isError, error, isSuccess } = useMutation({
+    mutationFn: updateCategoryAPI,
+    mutationKey: ["update-category"],
+  });
+
   const formik = useFormik({
     initialValues: {
       type: "",
       name: "",
     },
-    onSubmit: (values) => {},
+    validationSchema,
+    onSubmit: (values) => {
+      const data = {
+        ...values,
+        id,
+      };
+      mutateAsync(data)
+        .then(() => {
+          navigate("/categories");
+        })
+        .catch((error) => {
+          console.error("Update failed:", error);
+        });
+    },
   });
 
   return (
@@ -41,7 +57,7 @@ const UpdateCategory = () => {
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
       {/* Display alert message */}
-      {/* {isError && (
+      {isError && (
         <AlertMessage
           type="error"
           message={
@@ -55,7 +71,7 @@ const UpdateCategory = () => {
           type="success"
           message="Category updated successfully, redirecting..."
         />
-      )} */}
+      )}
       {/* Category Type */}
       <div className="space-y-2">
         <label
@@ -66,8 +82,8 @@ const UpdateCategory = () => {
           <span>Type</span>
         </label>
         <select
-          {...formik.getFieldProps("type")}
           id="type"
+          {...formik.getFieldProps("type")}
           className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
         >
           <option value="">Select transaction type</option>
@@ -87,9 +103,9 @@ const UpdateCategory = () => {
         </label>
         <input
           type="text"
+          id="name"
           {...formik.getFieldProps("name")}
           placeholder="Name"
-          id="name"
           className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3"
         />
         {formik.touched.name && formik.errors.name && (
