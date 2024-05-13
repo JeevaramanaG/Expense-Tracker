@@ -9,7 +9,7 @@ import {
   FaRegCommentDots,
   FaWallet,
 } from "react-icons/fa";
-import {listsCategoryAPI } from "../../services/category/categoryServices";
+import { listsCategoryAPI } from "../../services/category/categoryServices";
 import { addTransactionAPI } from "../../services/transactions/transactionServices";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "../Alert/AlertMessage";

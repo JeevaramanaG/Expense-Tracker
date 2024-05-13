@@ -13,6 +13,7 @@ const CategoriesList = () => {
     queryFn: listsCategoryAPI,
     queryKey: ["list-category"],
   });
+  console.log(data);
 
   // Navigation
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const CategoriesList = () => {
   const handleDelete = (id) => {
     mutateAsync(id)
       .then((data) => {
-        refetch();
+        // refetch();
       })
       .catch((err) => console.log(err));
   };

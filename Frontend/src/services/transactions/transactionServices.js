@@ -40,7 +40,7 @@ export const updateCategoryAPI = async ({ name, type, id }) => {
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `jeeva ${token}`,
       },
     }
   );
@@ -51,7 +51,7 @@ export const updateCategoryAPI = async ({ name, type, id }) => {
 export const deleteCategoryAPI = async (id) => {
   const response = await axios.delete(`${BASE_URL}/categories/delete/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `jeeva ${token}`,
     },
   });
   //Return a promise
@@ -64,10 +64,10 @@ export const listTransactionsAPI = async ({
   startDate,
   endDate,
 }) => {
-  const response = await axios.get(`${BASE_URL}/transaction/lists`, {
+  const response = await axios.get(`${BASE_URL}/transaction/filter`, {
     params: { category, endDate, startDate, type },
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `jeeva ${token}`,
     },
   });
   //Return a promise
