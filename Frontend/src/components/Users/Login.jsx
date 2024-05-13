@@ -7,6 +7,7 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { loginAPI } from "../../services/users/userServices";
 import AlertMessage from "../Alert/AlertMessage";
 import { LoginAction } from "../redux/Slice/authSlice";
+import { useNavigate } from "react-router-dom";
 
 //validation
 const validationSchema = Yup.object({
@@ -17,6 +18,8 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
+  // Navigation
+  const navigate = useNavigate();
   // dispatch
   const dispatch = useDispatch();
 
@@ -43,7 +46,6 @@ const LoginForm = () => {
           dispatch(LoginAction(data));
           // Save the user in Local Storage
           localStorage.setItem("userInfo", JSON.stringify(data));
-
           console.log(data);
         })
         .catch((err) => {
@@ -51,6 +53,14 @@ const LoginForm = () => {
         });
     },
   });
+  // Redirecting
+  useEffect(() => {
+    setTimeout(() => {
+      if (isSuccess) {
+        navigate("/profile");
+      }
+    }, 1000);
+  }, [isPending, isError, error, isSuccess]);
   return (
     <form
       onSubmit={formik.handleSubmit}

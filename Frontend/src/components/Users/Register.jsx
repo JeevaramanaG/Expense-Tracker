@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { regiterAPI } from "../../services/users/userServices";
+import AlertMessage from "../Alert/AlertMessage";
+import { useNavigate } from "react-router-dom";
 
 //Validations
 const validationSchema = Yup.object({
@@ -11,7 +15,7 @@ const validationSchema = Yup.object({
     .email("Invalid email address")
     .required("Email is required"),
   password: Yup.string()
-    .min(8, "Password must be at least 8 characters long")
+    .min(5, "Password must be at least 5 characters long")
     .required("Password is required"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -21,13 +25,65 @@ const validationSchema = Yup.object({
     "You must agree to the terms and conditions"
   ),
 });
+
 const RegistrationForm = () => {
+  // Navigation
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
+    mutationFn: regiterAPI,
+    mutationKey: ["register"],
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      username: "",
+    },
+
+    // validation
+    validationSchema,
+    //submit
+    onSubmit: (value) => {
+      console.log(value);
+      // https request
+      mutateAsync(value)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  });
+  // Redirecting
+  useEffect(() => {
+    setTimeout(() => {
+      if (isSuccess) {
+        navigate("/login");
+      }
+    }, 2000);
+  }, [isPending, isError, error, isSuccess]);
+
   return (
-    <form className="max-w-md mx-auto my-10 bg-white p-6 rounded-xl shadow-lg space-y-6 border border-gray-200">
+    <form
+      onSubmit={formik.handleSubmit}
+      className="max-w-md mx-auto my-10 bg-white p-6 rounded-xl shadow-lg space-y-6 border border-gray-200"
+    >
       <h2 className="text-3xl font-semibold text-center text-gray-800">
         Sign Up
       </h2>
       {/* Display messages */}
+      {isPending && <AlertMessage type="loading" message="Register you in " />}
+      {isError && (
+        <AlertMessage type="error" message={error.response.data.message} />
+      )}
+      {isSuccess && (
+        <AlertMessage type="success" message="Registered in Success" />
+      )}
 
       <p className="text-sm text-center text-gray-500">
         Join our community now!
