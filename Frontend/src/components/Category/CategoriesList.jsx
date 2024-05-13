@@ -1,25 +1,50 @@
 import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { listsCategoryAPI } from "../../services/category/categoryServices";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  deleteCategoryAPI,
+  listsCategoryAPI,
+} from "../../services/category/categoryServices";
 import AlertMessage from "../Alert/AlertMessage";
 
 const CategoriesList = () => {
-  const { data, isError, error, isFetched, isLoading } = useQuery({
+  const { data, isError, error, isFetched, isLoading, refetch } = useQuery({
     queryFn: listsCategoryAPI,
     queryKey: ["list-category"],
   });
+
+  // Navigation
+  const navigate = useNavigate();
+
+  //   fetching data
+  const {
+    mutateAsync,
+    isPending,
+    error: categoryErr,
+    isSuccess,
+  } = useMutation({
+    mutationFn: deleteCategoryAPI,
+    mutationKey: ["deleteCategory"],
+  });
+  // delete
+  const handleDelete = (id) => {
+    mutateAsync(id)
+      .then((data) => {
+        refetch();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="max-w-md mx-auto my-10 bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Categories</h2>
       {/* Display AlertMessage */}
-      {isLoading && (<AlertMessage type='loading' message='is Loading'/>)}
+      {isLoading && <AlertMessage type="loading" message="is Loading" />}
       {isError && (
         <AlertMessage type="error" message={error.response.data.message} />
       )}
-      
-      
+
       <ul className="space-y-4">
         {data?.map((category) => (
           <li
@@ -46,7 +71,7 @@ const CategoriesList = () => {
                 </button>
               </Link>
               <button
-                // onClick={() => handleDelete(category?._id)}
+                onClick={() => handleDelete(category?._id)}
                 className="text-red-500 hover:text-red-700"
               >
                 <FaTrash />

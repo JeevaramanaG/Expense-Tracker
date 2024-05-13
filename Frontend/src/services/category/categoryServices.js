@@ -66,3 +66,19 @@ export const updateCategoryAPI = async ({ name, type, id }) => {
     throw error;
   }
 };
+// delete category
+export const deleteCategoryAPI = async (id) => {
+  const token = getUserFromLocalStorage();
+  try {
+    const response = await axios.delete(`${BASE_URL}/category/delete/${id}`, {
+      headers: {
+        Authorization: `jeeva ${token}`,
+      },
+    });
+    // return response data
+    return response.data;
+  } catch (error) {
+    // Handle error if request fails
+    throw error;
+  }
+};
