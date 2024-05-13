@@ -7,7 +7,7 @@ const userRouter = express.Router();
 userRouter.post("/api/v1/users/register", userController.register);
 
 // login api
-userRouter.get("/api/v1/users/login", userController.login);
+userRouter.post("/api/v1/users/login", userController.login);
 
 // profile api
 userRouter.get(

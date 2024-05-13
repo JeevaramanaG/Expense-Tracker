@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const userRouter = require("./routes/UserRouter");
 const mongoose = require("mongoose");
 const errorHandler = require("./middlewares/errorHandler");
@@ -9,6 +10,14 @@ const transactionRouter = require("./routes/TransactionRouter");
 const app = express();
 app.use(express.json());
 
+// cors config
+const corsOption = {
+  origin: ["http://localhost:5173"],
+};
+// use cors
+app.use(cors(corsOption));
+
+// connect to database
 mongoose
   .connect("mongodb://127.0.0.1:27017/mern-expense-tracker")
   .then(() => {

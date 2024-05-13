@@ -39,13 +39,13 @@ const RegistrationForm = () => {
         <input
           id="username"
           type="text"
-          // {...formik.getFieldProps("username")}
+          {...formik.getFieldProps("username")}
           placeholder="Username"
           className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         />
-        {/* {formik.touched.username && formik.errors.username && (
+        {formik.touched.username && formik.errors.username && (
           <span className="text-xs text-red-500">{formik.errors.username}</span>
-        )} */}
+        )}
       </div>
 
       {/* Input Field - Email */}
@@ -54,13 +54,13 @@ const RegistrationForm = () => {
         <input
           id="email"
           type="email"
-          // {...formik.getFieldProps("email")}
+          {...formik.getFieldProps("email")}
           placeholder="Email"
           className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         />
-        {/* {formik.touched.email && formik.errors.email && (
+        {formik.touched.email && formik.errors.email && (
           <span className="text-xs text-red-500">{formik.errors.email}</span>
-        )} */}
+        )}
       </div>
 
       {/* Input Field - Password */}
@@ -69,13 +69,13 @@ const RegistrationForm = () => {
         <input
           id="password"
           type="password"
-          // {...formik.getFieldProps("password")}
+          {...formik.getFieldProps("password")}
           placeholder="Password"
           className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         />
-        {/* {formik.touched.password && formik.errors.password && (
+        {formik.touched.password && formik.errors.password && (
           <span className="text-xs text-red-500">{formik.errors.password}</span>
-        )} */}
+        )}
       </div>
 
       {/* Input Field - Confirm Password */}
@@ -84,15 +84,15 @@ const RegistrationForm = () => {
         <input
           id="confirmPassword"
           type="password"
-          // {...formik.getFieldProps("confirmPassword")}
+          {...formik.getFieldProps("confirmPassword")}
           placeholder="Confirm Password"
           className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         />
-        {/* {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
           <span className="text-xs text-red-500">
             {formik.errors.confirmPassword}
           </span>
-        )} */}
+        )}
       </div>
 
       {/* Submit Button */}
