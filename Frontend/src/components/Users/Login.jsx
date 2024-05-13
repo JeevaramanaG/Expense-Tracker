@@ -57,7 +57,7 @@ const LoginForm = () => {
   useEffect(() => {
     setTimeout(() => {
       if (isSuccess) {
-        navigate("/profile");
+        navigate("/");
       }
     }, 1000);
   }, [isPending, isError, error, isSuccess]);

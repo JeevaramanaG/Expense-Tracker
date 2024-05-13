@@ -13,7 +13,7 @@ export const addTransactionAPI = async ({
   amount,
 }) => {
   const response = await axios.post(
-    `${BASE_URL}/transactions/create`,
+    `${BASE_URL}/transaction/add`,
     {
       category,
       date,
@@ -33,7 +33,7 @@ export const addTransactionAPI = async ({
 //! update
 export const updateCategoryAPI = async ({ name, type, id }) => {
   const response = await axios.put(
-    `${BASE_URL}/categories/update/${id}`,
+    `${BASE_URL}/category/update/${id}`,
     {
       name,
       type,
@@ -49,7 +49,7 @@ export const updateCategoryAPI = async ({ name, type, id }) => {
 };
 //! delete
 export const deleteCategoryAPI = async (id) => {
-  const response = await axios.delete(`${BASE_URL}/categories/delete/${id}`, {
+  const response = await axios.delete(`${BASE_URL}/category/delete/${id}`, {
     headers: {
       Authorization: `jeeva ${token}`,
     },
