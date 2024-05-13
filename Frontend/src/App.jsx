@@ -6,6 +6,7 @@ import LoginForm from "./components/Users/Login";
 import RegistrationForm from "./components/Users/Register";
 import { useSelector } from "react-redux";
 import { getUserFromLocalStorage } from "./utils/getUserFromLocalStorage";
+import AddCategory from "./components/Category/AddCategory";
 
 function App() {
   const token = getUserFromLocalStorage();
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<HeroSection />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/add-category" element={<AddCategory />} />
       </Routes>
     </BrowserRouter>
   );
