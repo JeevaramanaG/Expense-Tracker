@@ -28,8 +28,13 @@ export const createAPI = async ({ name, type }) => {
 
 // list of Category
 export const listsCategoryAPI = async () => {
+  const token = getUserFromLocalStorage();
   try {
-    const response = await axios.get(`${BASE_URL}/category/lists`);
+    const response = await axios.get(`${BASE_URL}/category/lists`, {
+      headers: {
+        Authorization: `jeeva ${token}`,
+      },
+    });
     // return response data
     return response.data;
   } catch (error) {
